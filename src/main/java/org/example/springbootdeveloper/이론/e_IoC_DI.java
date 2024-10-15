@@ -1,12 +1,57 @@
 package org.example.springbootdeveloper.이론;
 
+import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.awt.print.Book;
+
+class Book1{
+    private  String title;
+    public Book1(String title ){
+        this.title=title;
+    }
+    public String getTitle(){
+        return this.title;
+    }
+}//전통적인 자바 코드 방식 : 객체 생성과 관리를 개발자가 직접 정의
+class BookStore1{
+    private  Book1 book;
+    public BookStore1(){
+        this.book = new Book1("Java 기초");
+    }
+    public void displayBook(){
+        System.out.println("Book : "+book.getTitle());
+    }
+}
+@Component
+class Book2{
+    private String title;
+    public  Book2(){
+        this.title = "스프링 기초";
+    }
+    public String getTitle(){
+        return this.title;
+    }
+}
+@Component
+class BookStore2{
+    private Book2 book;
+    @Autowired
+    public BookStore2(Book2 book){
+        this.book =book;
+    }
+    public void displayBook(){
+        System.out.println("Book : "+ book.getTitle());
+    }
+}
+
 
 
 public class e_IoC_DI {
     public static void main(String[] args) {
-//        BookStore2 store2 = new BookStore2();
-//        store2.displayBook();
+        BookStore1 store1 = new BookStore1();
+        store1.displayBook();
 
         // 정말로중요한 개념
         // 1.제어의 역전 (Inversion of Control)

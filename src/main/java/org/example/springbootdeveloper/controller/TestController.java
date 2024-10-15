@@ -1,10 +1,13 @@
-package org.example.springbootdeveloper;
+package org.example.springbootdeveloper.controller;
+import org.example.springbootdeveloper.entity.Member;
+import org.example.springbootdeveloper.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
+//controller ->뷰를 반환
+//restcontroller ->
 @RestController
 public class TestController {
     // Get /test 요청을 하면
@@ -13,7 +16,7 @@ public class TestController {
     // @RestController: 라우터 역할을 하는 애너테이션
     // cf) 라우터
     //  : http 요청과 메서드를 연결하는 장치
-
+    //@component -> 빈
     //@GetMapping 어노테이션
     // : 메서드와 경로를 매핑할 때 스프링부드에서 설정한 경로
     // http"//localhost(사용중인컴퓨터):8080(포트번호)/test(경로)
@@ -24,13 +27,24 @@ public class TestController {
     @Autowired
     TestService testService;
 
-    @GetMapping("/test")
+    @GetMapping("/test")// 경로를 test
+    //이게 controller
     public List<Member> getAllMembers() {
         List<Member> members = testService.getAllMembers();
         return members;
     }
 
 }
+
+/*
+요청을 받아서 처리하는게 controlller
+ -> controller
+ service(생성및 삭제 수정.. 다양한 기능 )
+ controller 가 service생성 -> @conponent로 의존성 등록 + ms
+ 비즈니스 로직 =service 에는 repostiory가 필요하다
+ 엔티티는  table당 하나씩
+ DTO- 데이터 규격을 만들어질때 사용함
+ */
 
     /*
     스프링 부트 스타터
