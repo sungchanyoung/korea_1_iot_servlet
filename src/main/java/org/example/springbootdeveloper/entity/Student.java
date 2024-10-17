@@ -18,7 +18,7 @@ public class Student {
     private Long id;
     private String name;
     private String email;
-
+//JPA(Java Persistence API)는 자바 애플리케이션에서 객체와 관계형 데이터베이스 간의 매핑을 제공하는 표준 API
     protected Student() {
         // JPA는 엔터티 생성 시 기본 생성자를 사용 - 필수
     }

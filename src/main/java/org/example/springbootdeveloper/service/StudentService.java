@@ -66,6 +66,26 @@ public class StudentService {
             ); // 데이터 조회 중 에러 발생 시 예외 처리
         }
     }
+    // 3) 새로운 학생 등록
+    public StudentDto createStudent(StudentDto studentDto) {
+        try {
+            // StudentDto에서 전달된 데이터를 사용하여 Entity(객체) 생성
+            Student student = new Student(studentDto.getName(), studentDto.getEmail());
+
+            // 생성한 Studnet 객체를 DB에 저장
+            Student savedStudent = studentRepository.save(student);
+
+            // 저장된 Student 객체를 StudentDto로 변환하여 반환
+            return new StudentDto(savedStudent.getId()
+                    , savedStudent.getName()
+                    , savedStudent.getEmail());
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Failed to create student", e
+            ); // 등록 중 에러 발생 시 예외 처리
+        }
+    }
 
     public StudentDto updateStudent(Long id, StudentDto studentDto) {
         try {
