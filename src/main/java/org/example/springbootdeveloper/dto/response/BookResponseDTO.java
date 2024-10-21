@@ -11,6 +11,8 @@ import org.example.springbootdeveloper.entity.Category;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+//responseDTO :  서버가 클라이언트에게 응답할 때 사용하는 데이터 전송 객체야.
+// 이때는 데이터베이스에 저장된 각 항목을 고유하게 식별할 수 있도록 ID가 포함되어야 해.
 public class BookResponseDTO {
     private  Long id;
     private  String writer;

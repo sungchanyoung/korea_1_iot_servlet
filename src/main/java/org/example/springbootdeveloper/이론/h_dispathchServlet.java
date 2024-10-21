@@ -16,7 +16,7 @@ public class h_dispathchServlet {
    // handlerMapping을 통해 요청 URI에 맞는 핸들러를 찾음
    //EX))/student로 요청  -> StudentController가 매핑
 
-    //3Handler adapter 조회
+    //3) Handler adapter 조회
     // 매핑한 핸들러 실행 을 위한 어댑터 찾고
     // controller가 실행될 수 있는 형태로 어댑터가 변환
     //handler adepter찾은 핸들러를 실행

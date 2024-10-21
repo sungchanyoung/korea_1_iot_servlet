@@ -59,7 +59,7 @@ public class BookService {
         if(category == null){
             books =bookRepository.findByWriter(weiter);
         }else{
-            books = bookRepository.finbyCategoryAndWriter(category, weiter);
+            books = bookRepository.findByCategoryAndWriter(category, weiter);
         }
         return  books.stream()
                 .map(this::convertToResponseDto )

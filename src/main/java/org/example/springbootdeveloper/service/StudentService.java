@@ -17,6 +17,7 @@ public class StudentService {
     private final StudentRepository studentRepository;
 
     // 생성자 주입 (DI)
+    //DI :  필요한 객체를 직접 생성하지 않고, 외부에서 주입받는 방식
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
         // 생성자를 통해 의존성 주입
@@ -27,6 +28,7 @@ public class StudentService {
     public List<StudentDto> getAllStudents() {
         try {
             // 모든 학생 데이터를 가져옴
+            //findAll() : 데이터베이스테이블의 모든 레코드를 조회하는데 사용
             List<Student> students = studentRepository.findAll();
             List<StudentDto> studentsDto = students.stream() // stream API로 데이터 처리
                     .map(student -> new StudentDto(
@@ -35,6 +37,7 @@ public class StudentService {
                             student.getEmail()
                     ))
                     .collect(Collectors.toList());
+            //변환된 스트림 요소들을 리스트로  변환
 
             return studentsDto;
         } catch (Exception e) {
@@ -46,6 +49,8 @@ public class StudentService {
     }
 
     // 2) 특정 ID 학생 조회
+    // 객체 타입이 필요한 상황 = Long
+    //메모이와 성능,null값을 가질수 없음  =long
     public StudentDto getStudentById(Long id) {
         try {
             // 주어진 ID로 학생을 조회하고 변수에 저장
