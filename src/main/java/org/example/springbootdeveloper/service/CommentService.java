@@ -3,6 +3,7 @@ package org.example.springbootdeveloper.service;
 import lombok.RequiredArgsConstructor;
 import org.example.springbootdeveloper.dto.request.CommentRequestDto;
 import org.example.springbootdeveloper.dto.response.CommentResponseDto;
+import org.example.springbootdeveloper.dto.response.PostResponseDto;
 import org.example.springbootdeveloper.dto.response.ResponseDto;
 import org.example.springbootdeveloper.entity.Comment;
 import org.example.springbootdeveloper.entity.Post;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -38,29 +40,55 @@ public class CommentService {
     }
 
     public ResponseDto<List<CommentResponseDto>> getCommentByPost(Long postId) {
-        List<CommentResponseDto> comment =
-        return null;
-
-    }
-
-    public ResponseDto<CommentResponseDto> updateComment(Long commentId,String newContent) {
-        return null;
-
-    }
-
-    public ResponseDto<Void> deleteComment(Long commentId) {
-        try{
-            Post post  =postRepository.findById(commentId)
-                    .orElseThrow(() -> new Error("Post not found"));
-            postRepository.delete(post);
-            //일반적으로 성공 했는지 에 대한 유무를 리턴하고
-            return ResponseDto.setSuccess("success", null);
+        try {
+            //주어진 postId를 기준으로 모든 댓글을 찾는 메서드
+            List<CommentResponseDto> comment= commentRepository.findByPostId(postId)
+                    .stream()
+                    .map(this::convertToCommentResponseDto)
+                    .collect(Collectors.toList());
+            return ResponseDto.setSuccess("댓글을 정상적으로 가져왔습니다.",comment);
         } catch (Exception e) {
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Error occurred while updating psot",e);
+                    "Error occurred while updating comment"
+                    ,e);
         }
     }
+        //newContent를 사용해서를 사용해서 업데이트된 댓글 내용을 설정해야해
+        //comment.getContent는  기존의 내용이기 때문에 새로운 내용을 반영하려면 newContent를 사용함
+        //새로운 댓글이 저장될것이고 반환
+    public ResponseDto<CommentResponseDto> updateComment(Long commentId,String newContent) {
+       try {
+           Comment comment = commentRepository.findById(commentId)
+                   .orElseThrow(() -> new IllegalArgumentException("try again"));
+            comment.setContent(newContent);
+           commentRepository.save(comment);
+           return  ResponseDto.setSuccess("success",convertToCommentResponseDto(comment));
+       } catch (Exception e) {
+           throw new ResponseStatusException(
+                   HttpStatus.INTERNAL_SERVER_ERROR,
+                   "Error occurred while updating comment"
+                   ,e);
+       }
+
+    }
+    //Id를 이용해서 삭제 VS 객체를 이용해서 객체를 이용해서 삭제
+    //차이점 : ID로 직접 삭제하면 더 간단하게 삭제 가능 ,객체러 삭제하면 더 명확하게 삭제 가능
+    public ResponseDto<Void> deleteComment(Long commentId) {
+        try{
+            //댓글 삭제하기떄문에 commentId로 해당 댓글을 조회해서 댓글 삭제
+              Comment comment = commentRepository.findById(commentId)
+                      .orElseThrow(() ->  new IllegalArgumentException("retry "));
+              commentRepository.delete(comment);
+              return ResponseDto.setSuccess("success",null);
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Error occurred while deleteing comment",e);
+        }
+    }
+    //Comment를 객체로 받아서  -> CommentResoponseDto타입 의 객체로 변환
+    // CommentDto에 있는 필등의 고유값들을 반환시킴
     private CommentResponseDto convertToCommentResponseDto(Comment comment) {
         return new CommentResponseDto(
                 comment.getId(), comment.getPost().getId(), comment.getContent()
