@@ -1,9 +1,7 @@
 package org.example.springbootdeveloper.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 import org.example.springbootdeveloper.entity.Category;
 
 //책 생성 시 클라이언트 서버에 전달하는 데이터
@@ -17,8 +15,8 @@ import org.example.springbootdeveloper.entity.Category;
 @NoArgsConstructor
 //@NoArgsConstructor: 기본 생성자를 자동으로 만들어줘. 아무런 매개변수가 없는 생성자를 생성해주는 거야.
 public class BookRequestDTO {
-    private  String writer;
-    private  String title;
-    private  String content;
+    private String writer;
+    private String title;
+    private String content;
     private Category category;
 }

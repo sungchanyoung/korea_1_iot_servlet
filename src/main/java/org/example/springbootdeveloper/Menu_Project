@@ -1,0 +1,25 @@
+Entity
+Menu 클래스
+고유값: id
+메뉴명 :name
+메뉴설명
+메뉴가격:price
+이용 가능 여부 :isAvailable(boolean)
+카테고리 :category (String)
+크기:size(String )
+
+---기능 정리
+1.메뉴  생성
+2.메뉴 (단건)조회
+3.메뉴 조회
+4.메뉴 수정
+5.메뉴 삭제
+
+-프로젝트 구조 -
+MenuController
+MenuService
+MenuRepository
+MenuRequestDto
+ +)ResponseDto(dto/response)
+ +)apiMappingPattern(common/constant)
+ +)ResponseMessage(common/constant)

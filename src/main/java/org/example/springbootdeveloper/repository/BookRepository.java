@@ -17,13 +17,13 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     List<Book> findByTitleContaining(String keyword);
     //sql문  ->select *from book where where like  %(keyword)%;
     //cf) 일반 메서드
-    //반환 타입 메서드명(매개변수)
+    // 반환 타입 메서드명(매개변수)
     List<Book> findByCategory(Category category);
 
-    //3특정 카테고리에서 작성자 의 책 조회
+    //3 특정 카테고리에서 작성자 의 책 조회
     List<Book>findByCategoryAndWriter(Category category ,String writer);
 
-    //카테고리를 지정하지 않을 경우 모든 카테고리에서 작성자의 책 조회
+    // 카테고리를 지정하지 않을 경우 모든 카테고리에서 작성자의 책 조회
     List<Book> findByWriter(String writer);
 
 }
